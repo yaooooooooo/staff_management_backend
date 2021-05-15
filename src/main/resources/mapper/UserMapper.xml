@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.accenture.staffmanagement.entity.User">
         <id column="id" jdbcType="BIGINT" property="id" />
         <result column="name" jdbcType="VARCHAR" property="name" />
-        <result column="eid" jdbcType="VARCHAR" property="name" />
+        <result column="eid" jdbcType="VARCHAR" property="eid" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -19,6 +19,15 @@
         from user
         <where>
             id = #{id, jdbcType=BIGINT}
+        </where>
+    </select>
+
+    <select id="getUserByEid" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        <where>
+            eid = #{eid, jdbcType=VARCHAR}
         </where>
     </select>
 </mapper>
