@@ -1,10 +1,13 @@
 package com.accenture.staffmanagement.config;
 
+import com.accenture.staffmanagement.utils.JwtAuthenticationInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.StandardCharsets;
@@ -12,6 +15,18 @@ import java.util.List;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        //默认拦截所有路径
+        registry.addInterceptor(authenticationInterceptor())
+                .addPathPatterns("/**");
+    }
+    @Bean
+    public JwtAuthenticationInterceptor authenticationInterceptor() {
+        return new JwtAuthenticationInterceptor();
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
