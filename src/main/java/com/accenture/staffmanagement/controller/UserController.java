@@ -20,12 +20,14 @@ public class UserController {
         return "登录成功" + eid;
     }
 
-    @GetMapping(value = "/info/eid/{eid}", produces = "application/json;charset=utf-8")
+//    @GetMapping(value = "/info/eid/{eid}", produces = "application/json;charset=utf-
+    @GetMapping("/info/eid/{eid}")
     public User getUserInfo(@PathVariable("eid") String eid) {
         return userService.getUserByEid(eid);
     }
 
-    @GetMapping(value = "/info/id/{id}", produces = "application/json;charset=utf-8")
+//    @GetMapping(value = "/info/id/{id}", produces = "application/json;charset=utf-8")
+    @GetMapping("/info/id/{id}")
     public User getUserById(@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
 //        System.out.println(user);
