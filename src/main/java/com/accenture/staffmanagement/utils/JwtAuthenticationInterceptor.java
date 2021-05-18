@@ -18,10 +18,17 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
     UserService userService;
 
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
         // 从请求头中取出 token  这里需要和前端约定好把jwt放到请求头一个叫token的地方
-        String token = httpServletRequest.getHeader("token");
+        String token = request.getHeader("token");
         // 如果不是映射到方法直接通过
+        String uri = request.getRequestURI();
+        if (uri.contains("/swagger-ui.html")
+                || uri.contains("/v2")
+                || uri.contains("/swagger-resources")) {
+            return true;
+        }
+
         if (!(object instanceof HandlerMethod)) {
             return true;
         }
@@ -62,10 +69,8 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
             String realName = JwtUtils.getClaimByName(token, "realName").asString();
 
             //放入attribute以便后面调用
-            httpServletRequest.setAttribute("userName", userName);
-            httpServletRequest.setAttribute("realName", realName);
-
-
+            request.setAttribute("userName", userName);
+            request.setAttribute("realName", realName);
             return true;
 
         }
