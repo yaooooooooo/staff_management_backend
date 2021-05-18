@@ -8,3 +8,5 @@ CREATE TABLE `user` (
 
 insert into user (name, eid) values ('陈庚', 'geng.a.chen');
 insert into user (name, eid) values ('林睿', 'rui.a.lin');
+insert into user (name, eid) values ('张飞', 'fei.zhang');
+insert into user (name, eid) values ('吕布', 'bu.lv');

@@ -32,6 +32,7 @@ public class User {
         this.eid = eid;
     }
 
+    // 调试
     @Override
     public String toString() {
         return "User{" +

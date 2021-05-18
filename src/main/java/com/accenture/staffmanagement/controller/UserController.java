@@ -6,6 +6,7 @@ import com.accenture.staffmanagement.service.UserService;
 import com.accenture.staffmanagement.utils.JwtUtils;
 import com.accenture.staffmanagement.utils.PassToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class UserController {
     }
 
 //    @GetMapping(value = "/info/eid/{eid}", produces = "application/json;charset=utf-
+    @ApiOperation("Get User by Eid.")
     @GetMapping("/info/eid/{eid}")
     public User getUserInfo(@PathVariable("eid") String eid) {
         User user = userService.getUserByEid(eid);
@@ -42,6 +44,7 @@ public class UserController {
     }
 
 //    @GetMapping(value = "/info/id/{id}", produces = "application/json;charset=utf-8")
+    @ApiOperation("Get User by id.")
     @GetMapping("/info/id/{id}")
     public User getUserById(@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
