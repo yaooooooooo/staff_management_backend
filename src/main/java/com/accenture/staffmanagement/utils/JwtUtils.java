@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class JwtUtils {
+
     public static String createToken(String userId, String realName, String userName) {
 
         Calendar nowTime = Calendar.getInstance();

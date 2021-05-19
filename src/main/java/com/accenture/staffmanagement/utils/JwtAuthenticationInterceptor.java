@@ -3,6 +3,8 @@ package com.accenture.staffmanagement.utils;
 import com.accenture.staffmanagement.entity.User;
 import com.accenture.staffmanagement.exception.BizException;
 import com.accenture.staffmanagement.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,6 +16,10 @@ import java.lang.reflect.Method;
 
 public class JwtAuthenticationInterceptor implements HandlerInterceptor {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationInterceptor.class);
+
+    public static final String JWT_USER = "jwtUser";
+
     @Autowired
     UserService userService;
 
@@ -23,7 +29,8 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         String token = request.getHeader("token");
         // 如果不是映射到方法直接通过
         String uri = request.getRequestURI();
-        if (uri.contains("/swagger-ui.html")
+        if (uri.contains("/error")
+                || uri.contains("/swagger-ui.html")
                 || uri.contains("/v2")
                 || uri.contains("/swagger-resources")) {
             return true;
@@ -43,7 +50,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         }
         //默认全部检查
         else {
-            System.out.println("被jwt拦截需要验证");
+            logger.info("被jwt拦截需要验证 : " + uri);
             // 执行认证
             if (token == null) {
                 //这里其实是登录失效,没token了   这个错误也是我自定义的，读者需要自己修改
@@ -69,7 +76,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
             String realName = JwtUtils.getClaimByName(token, "realName").asString();
 
             //放入attribute以便后面调用
-            request.setAttribute("userName", userName);
+            request.setAttribute(JWT_USER, user);
             request.setAttribute("realName", realName);
             return true;
 
