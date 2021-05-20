@@ -27,7 +27,6 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
         // 从请求头中取出 token  这里需要和前端约定好把jwt放到请求头一个叫token的地方
         String token = request.getHeader("token");
-        // 如果不是映射到方法直接通过
         String uri = request.getRequestURI();
         if (uri.contains("/error")
                 || uri.contains("/swagger-ui.html")
@@ -36,6 +35,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        // 如果不是映射到方法直接通过
         if (!(object instanceof HandlerMethod)) {
             return true;
         }
