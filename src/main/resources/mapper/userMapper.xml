@@ -48,8 +48,4 @@
         where id = #{id}
     </update>
 
-    <delete id="deleteUserById" parameterType="Long">
-        delete from user where id = #{id}
-    </delete>
-
 </mapper>
