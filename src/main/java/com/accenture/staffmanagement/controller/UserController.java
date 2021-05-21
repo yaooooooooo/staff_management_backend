@@ -6,6 +6,7 @@ import com.accenture.staffmanagement.service.UserService;
 import com.accenture.staffmanagement.utils.JwtAuthenticationInterceptor;
 import com.accenture.staffmanagement.utils.JwtUtils;
 import com.accenture.staffmanagement.utils.PassToken;
+import com.accenture.staffmanagement.utils.ResultBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +63,26 @@ public class UserController {
             throw new BizException("-1", "未查找到用户！");
         }
         return user;
+    }
+
+    @PassToken
+    @ApiOperation("Add User.")
+    @PostMapping("/add")
+    public ResultBody addUser(@RequestBody User user) {
+        return ResultBody.success(userService.addUser(user));
+    }
+
+    @PassToken
+    @ApiOperation("Update User.")
+    @PostMapping("/update")
+    public ResultBody updateUser(@RequestBody User user) {
+        return ResultBody.success(userService.updateUser(user));
+    }
+
+    @PassToken
+    @ApiOperation("Update User.")
+    @DeleteMapping("/delete/{id}")
+    public ResultBody deleteUserById(@PathVariable("id") Long id) {
+        return ResultBody.success(userService.deleteUserById(id));
     }
 }

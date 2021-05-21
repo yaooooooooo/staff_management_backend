@@ -16,4 +16,15 @@ public interface UserDao {
      */
     User getUserByEid(String eid);
 
+    /**
+     * insert User into table.
+     * @param user
+     * @return
+     */
+    int addUser(User user);
+
+    boolean updateUser(User user);
+
+    boolean deleteUserById(Long id);
+
 }
