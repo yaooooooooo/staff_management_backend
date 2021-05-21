@@ -16,6 +16,8 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    private static final String ORIGINS[] = new String[] { "GET", "POST", "PUT", "DELETE", "PATCH" };
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
@@ -33,7 +35,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")
                 .allowCredentials(true)
-                .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
+                .allowedMethods(ORIGINS)
                 .maxAge(3600 * 24);
     }
 
